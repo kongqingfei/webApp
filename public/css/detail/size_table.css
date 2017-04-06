@@ -1,0 +1,12 @@
+.sizeinfohd{padding: 14px 10px 10px;}
+.sizeinfohd strong{border-left: 2px solid #e30c26;padding-left: 4px;font-size: 14px;}
+.sizeinfotable{overflow:auto;display: block;margin-left: 132px;}
+.sizeinfotable table{min-width:100%;overflow-x: scroll;font-size: 12px;}
+.sizeinfotable table tr{border-bottom: 1px solid #f1f1f1;}
+.sizeinfotable table tr:first-child{background: #f7f7f7;height: 40px;}
+.sizeinfotable table td{min-width: 100px;height: 40px;text-align: center;}
+.sizeinfotable table tr td:first-child{position: absolute;left: 0;border-bottom: 1px solid #f1f1f1;line-height: 40px;width: 132px;}
+.sizeinfotable table td.s1{background: #f7f7f7;border-right: 1px solid #f1f1f1;}
+.sizeinfotable.tz.br table td .line em{top: 2px;line-height: initial;}
+#dt_size_chart{margin-bottom: 30px;}
+#dt_size_chart p.tipz{margin-top: 15px;padding-left: 10px;font-size: 12px;border-bottom: 1px solid #f1f1f1;}

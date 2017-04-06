@@ -1,0 +1,120 @@
+{{#extend 'page_styles'}}
+	<link rel="stylesheet" href="../../css/detail/size_table.css" />
+{{/extend}}
+<div id="ct">
+	<div id="dt_size_chart">
+		{{!-- 尺码信息渲染 --}}
+		 {{#if_equal product.sizeContentlist.modelType 1}}
+			 {{!-- 新结构 --}}
+			 {{{hp_pro_size_render product.sizeContentlist}}}
+			 {{else}}
+			 {{!-- 老结构 --}}
+			 {{#if product.sizeContentlist.size}}
+		         {{#if product.sizeContentlist.sm}}
+		         <p class="tipz js_wxts"><span>尺码说明：</span>{{product.sizeContentlist.sm}}</p>
+		         {{/if}}
+				 <div class="sizeinfohd">
+				     <strong>尺码表</strong>
+				 </div>
+				 <div class="sizeinfotable ty">
+				     <table>
+				         {{#each product.sizeContentlist.size}}
+				         <tr {{{sizeContentlist @index}}}>
+				             <td class="s1">{{key}}</td>
+				             {{#each val}}
+				             <td>{{this}}</td>
+				             {{/each}}
+				         </tr>
+				         {{/each}}
+				     </table>
+				 </div>
+			 {{/if}}
+			 {{#if product.sizeContentlist.st}}
+			 <div class="sizeinfohd">
+			     <strong>身高尺码对照表</strong>
+			 </div>
+			 <div class="sizeinfotable tz">
+			     <table>
+			         {{#each product.sizeContentlist.st}}
+			         <tr {{{sizeContentlist @index}}}>
+			             <td class="s1">{{{key}}}</td>
+			             {{#each val}}
+			             <td>{{this}}</td>
+			             {{/each}}
+			         </tr>
+			         {{/each}}
+			     </table>
+			 </div>
+			 {{/if}}
+			 {{#if product.sizeContentlist.xx}}
+		         {{#if product.sizeContentlist.sm}}
+		         <p class="tipz"><span>尺码说明：</span>{{product.sizeContentlist.sm}}</p>
+		         {{/if}}
+				 <div class="sizeinfotable ty">
+				     <table>
+				         {{#each product.sizeContentlist.xx}}
+				         <tr {{{sizeContentlist @index}}}>
+				             <td class="s1">{{key}}</td>
+				             {{#each val}}
+				             <td>{{this}}</td>
+				             {{/each}}
+				         </tr>
+				         {{/each}}
+				     </table>
+				 </div>
+			 {{/if}}
+			 {{#if product.sizeContentlist.wx}}
+		         {{#if product.sizeContentlist.sm}}
+		         <p class="tipz"><span>尺码说明：</span>{{product.sizeContentlist.sm}}</p>
+		         {{/if}}
+				 <div class="sizeinfotable ty">
+				     <table>
+				         {{#each product.sizeContentlist.wx}}
+				         <tr {{{sizeContentlist @index}}}>
+				             {{#each val}}
+				             <td {{{firsttd @index}}}>{{this}}</td>
+				             {{/each}}
+				         </tr>
+				         {{/each}}
+				     </table>
+				 </div>
+			 {{/if}}
+			 {{#if product.sizeContentlist.mx}}
+		         {{#if product.sizeContentlist.sm}}
+		             <p class="tipz"><span>尺码说明：</span>{{product.sizeContentlist.sm}}</p>
+		         {{/if}}
+				 <div class="sizeinfotable ty">
+				     <table>
+				         {{#each product.sizeContentlist.mx}}
+				         <tr {{{sizeContentlist @index}}}>
+				             {{#each val}}
+				             <td {{{firsttd @index}}}>{{this}}</td>
+				             {{/each}}
+				         </tr>
+				         {{/each}}
+				     </table>
+				 </div>
+			 {{/if}}
+			 {{#if product.sizeContentlist.feel}}
+			 <div class="sizeinfohd">
+			     <strong>试穿感受</strong>
+			 </div>
+			 <div class="sizeinfotable ty">
+			     <table>
+			         {{#each product.sizeContentlist.feel}}
+			         <tr {{{sizeContentlist @index}}}>
+			             {{#each val}}
+			             <td {{{firsttd @index}}}>{{this}}</td>
+			             {{/each}}
+			         </tr>
+			         {{/each}}
+			     </table>
+			 </div>
+			 {{/if}}
+		{{/if_equal}}
+	</div>
+</div>
+{{#extend 'page_scripts'}}
+	<script type="text/javascript">
+	</script>
+{{/extend}}

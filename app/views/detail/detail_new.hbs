@@ -1,0 +1,336 @@
+{{#extend 'page_styles'}}
+	<link rel="stylesheet" href="../../css/detail/detail_new.css" />
+{{/extend}}
+<div id="ct">
+	<!-- {{#unless product.is_client}}
+		<header class="headers">
+			{{!-- <span class="back">
+				<i></i>
+			</span> --}}
+			<ul class="headers-tabs">
+				<li>
+					<span data-index="0" class="hover">商品信息</span>
+				</li>
+				<li>
+					<span data-index="1">图文详情</span>
+				</li>
+			</ul>
+		</header>
+	{{/unless}} -->
+	<div class="wrapper {{#if product.is_client}}notabs{{/if}}">
+		<div class="content clear">
+			<div class="product {{#unless product.is_client}}swipe{{/unless}}" data-index="0">
+				<div class="main">
+					<div class="bannerimgs" data-length="{{product.shop_images.length}}">
+						<ul class="clear">
+							{{#each product.shop_images}}
+								<li>
+									{{#if_equal @index 0}}
+										<img src="/img/replace.png" data-url="{{this}}">
+									{{else}}
+										<img src="/img/replace.png" data-url="{{this}}" class="hide">
+									{{/if_equal}}
+								</li>
+							{{/each}}
+							{{#unless product.is_client}}
+								<li class="last hide">
+									<p>
+										继续滑动查看图文详情
+									</p>
+								</li>
+							{{/unless}}
+						</ul>
+						<div class="num">1/{{product.shop_images.length}}</div>
+						{{#if_no_equal product.pin_status 2}}
+							<div class="mark">
+								{{#if_equal product.pin_status 1}}
+									即将开始
+								{{else}}
+									已抢光
+								{{/if_equal}}
+							</div>
+						{{/if_no_equal}}
+					</div>
+					<div class="title">{{product.title}}</div>
+					<div class="price"> <!--价格-->
+						{{getPrice product}}
+						{{#if_equal product.activity_type 1}}
+							<span class="mark-ls">抽奖</span>
+						{{else}}
+						{{#detail_show_sales product}}
+							<span id="sales">
+								{{getSales product}}
+							</span>
+						{{/detail_show_sales}}{{/if_equal}}
+					</div>
+					{{#if product.telephone_fare}}
+						<div class="productInfo"> <!--推荐理由-->
+							<div class="txt">
+								{{product.org_price}}元中国移动联通电信充值，自动充值。组团成功后，系统会在1-10分钟之内自动完成充值，届时手机会收到运营商发送的短信通知，停机手机收不到短信，如遇系统繁忙手机也有可能收不到短信或者短信延迟。
+							</div>
+						</div>
+					{{else}}
+						{{#if product.desc}}
+							<div class="productInfo"> <!--推荐理由-->
+								<div class="txt">
+									<em class="t">推荐理由</em>{{{getDesc product.desc}}}
+								</div>
+							</div>
+						{{/if}}
+					{{/if}}
+					<!-- {{#if product.telephone_fare}}{{else}}
+						{{#if_more_than product.skuLength 0}}
+							<div class="md" id="selectsku">
+								<div class="md_in">
+									<div class="sku_sel">
+										<span class="img_size">
+											选择{{product.sku.img_name}}{{#if product.sku.size_name}}、{{product.sku.size_name}}{{/if}}
+										</span><i class="i"></i>
+									</div>
+								</div>
+							</div>
+					    {{/if_more_than}}
+									    {{/if}} -->
+					<div class="md js_guild guild_top" style="display:none;"> <!--拼团玩法-->
+						<div class="md_in">
+				            <div class="tit">{{#if_equal product.activity_type 1}}抽奖团玩法{{else}}拼团玩法{{/if_equal}}<span class="dt">查看详情 <i class="ri_j_hei"></i></span></div>
+				            <div class="cont step_flow">
+				                <div class="step_item step_item_on"><span class="step_num">1</span><span class="steps">{{{prod_step_item1 product}}}</span></div>
+				                <div class="step_item"><span class="step_num">2</span><span class="steps">{{{prod_step_item2 product}}}</span></div>
+				                <div class="step_item"><span class="step_num">3</span><span class="steps">{{{prod_step_item3 product}}}</span></div>
+				                <div class="step_item"><span class="step_num">4</span><span class="steps">{{{prod_step_item4 product}}}</span></div>
+				            </div>
+				        </div>
+					</div>
+					<div class="md deliver"> <!--发货-->
+						<div class="md_in">
+							<span class="tit">
+								{{#if_equal product.activity_type 1}} <!--抽奖商品-->
+									预计开奖时间
+								{{else}}
+									关于发货
+								{{/if_equal}}
+							</span>
+							<span class="con">
+								{{detail_deliver_text product}}
+							</span>
+							{{#detail_show_express product}}
+							<span class="con express">{{product.express}}</span>
+							{{/detail_show_express}}
+						</div>
+					</div>
+					{{#detail_show_promise product}}
+						<div class="md promise"> <!--承诺-->
+							<div class="md_in">
+								<i class="p sprite"></i>折800承诺<span class="other">
+									<i class="r sprite"></i>按时发货{{#if product.promise.is_check}}<i class="r sprite"></i>人工质检{{/if}}{{#if product.promise.is_return}}<i class="r sprite"></i>8天包退{{else}}<i class="no sprite"></i>不可8天包退{{/if}}
+								</span>
+								{{#if product.promise.is_picc}}
+									<div class="cont"><i class="picc sprite"></i>该商品由折800与中国人保(PICC)联合承保</div>
+								{{/if}}
+							</div>
+						</div>
+					{{/detail_show_promise}}
+					{{#if_equal product.activity_type 1}} <!--抽奖规则-->
+						<div class="md rule">
+							<div class="md_in">
+								<div class="tit">抽奖规则</div>
+								<div class="cont">
+									{{{product.lot_rule}}}
+								</div>
+							</div>
+						</div>
+					{{/if_equal}}
+					{{#if_equal product.isInviteNew 1}}
+						<div class="md rule">
+							<div class="md_in">
+								<div class="tit">邀新规则</div>
+								<div class="cont">
+									<p class="new">1) 新用户{{#if_equal product.buy_plat 1}}APP{{/if_equal}}邀新团的商品仅限新用户参团，老用户可开团邀请新用户一起参与拼团；新用户是指从未在折800下过单的用户；</p>
+									<p class="new">2) 每个用户限购买1件{{#if_equal product.buy_plat 1}}APP{{/if_equal}}邀新团商品，同一地址、同一手机号、同一支付账号均为同一用户，重复购买将视为无效购买，系统会关闭订单并退款；</p>
+									<p class="new">3) 活动期间，新用户{{#if_equal product.buy_plat 1}}APP{{/if_equal}}邀新团商品每天限量供应，抢光为止；</p>
+									<p class="new">4) 订单支付成功后，如有发现违规、不符合购买条件的用户，则系统将自动关闭订单，并将货款原路退回到订单支付账户；</p>
+									<p class="new">5) 活动过程中如发现有碍其他用户公平参加本活动或违反本活动目的之行为的（包括但不限于作弊领取、机器刷奖、恶意套现等）本公司将取消有此行为的用户参加本次活动的资格或其因参加活动所获赠品或因此享有的利益。</p>
+								</div>
+							</div>
+						</div>
+					{{/if_equal}}
+				</div>
+				<div class="md ordering hide">
+					<div class="md_in">
+			            <div class="tit">以下小伙伴正在发起团购，您可直接参与</div>
+			            <div class="cont order_in"></div>
+			        </div>
+				</div>
+				{{#if product.multi_tuan}}
+					{{!-- 有tno的使用pool_ul_tno显示参团，没有tno用pool_ul显示开团；标题要修改；查看更多如果没有tno增加class值pool_more_no --}}
+				    <div class="md pool_md">
+				        <div class="md_in">
+				            <div class="tit">{{#if product.tno}}购买以下商品也可直接参团哦{{else}}开团后，其他用户购买以下商品都可以帮您成团哦~{{/if}}</div>
+				            <div class="cont">
+				                <ul class="{{#if product.tno}}pool_ul_tno{{else}}pool_ul{{/if}} clear"></ul>
+				                <div class="pool_more {{#unless product.tno}}pool_more_no{{/unless}}">
+				                    <em>查看更多商品</em><i></i>
+				                </div>
+				            </div>
+				        </div>
+				    </div>
+			    {{/if}}
+				
+				
+				{{!-- 评论 --}}
+				{{#with comment}}
+					{{#if_more_than total 0}}
+					<div class="md comment">
+						<div class="md_in">
+							<div class="comment-tit" data-url="{{all_comment_url}}"><div class="hpl">好评率：<span class="red">{{good_rate}}</span></div>共{{total}}人参与评分</div>
+							
+							{{#if_more_than tags.length 0}}
+							{{!-- 分类 --}}
+							<div class="comment-tags">
+								{{#each tags}}
+								<span class='btn-tag' data-url="{{url}}">{{name}}</span>
+								{{/each}}
+							</div>
+							{{/if_more_than}}
+
+							{{#each list}}
+							{{!-- 用户评论内容 --}}
+							<div class="comment-list" data-url="{{../all_comment_url}}">
+								<p class="tit"><span class="name">{{name}}</span><span class="date">{{date}}</span></p>
+								<p class="content">{{content}}</p>
+								<p class="sku">{{sku}}</p>
+								{{#if_more_than imgs.length 0}}
+								<p class="imgs">
+									{{#each imgs}}
+										<img src="/img/replace.png" data-url="{{this}}" />
+									{{/each}}
+								</p>
+								{{/if_more_than}}
+							</div>
+							{{/each}}
+							<div class="comment-foot" data-url="{{all_comment_url}}"><span class="btn-commentall">查看全部评价</span></div>
+						</div>
+					</div>
+					{{/if_more_than}}
+				{{/with}}
+
+				<div class="md recommend hide"> <!--商品推荐-->
+					<div class="md_in">
+						<div class="tit">你可能还喜欢</div>
+						<div class="cont">
+							<ul class="rc-list clear"></ul>
+						</div>
+					</div>
+				</div>
+				<div class="md js_guild guild_bottom"> <!--拼团玩法-->
+					<div class="md_in">
+			            <div class="tit">{{#if_equal product.activity_type 1}}抽奖团玩法{{else}}拼团玩法{{/if_equal}}<span class="dt">查看详情 <i class="ri_j_hei"></i></span></div>
+			            <div class="cont step_flow">
+			                <div class="step_item step_item_on"><span class="step_num">1</span><span class="steps">{{{prod_step_item1 product}}}</span></div>
+			                <div class="step_item"><span class="step_num">2</span><span class="steps">{{{prod_step_item2 product}}}</span></div>
+			                <div class="step_item"><span class="step_num">3</span><span class="steps">{{{prod_step_item3 product}}}</span></div>
+			                <div class="step_item"><span class="step_num">4</span><span class="steps">{{{prod_step_item4 product}}}</span></div>
+			            </div>
+			        </div>
+				</div>
+				<div class="md js_detail"> <!--图文详情-->
+					<div class="md_in">
+						<div class="tit">图文详情</div>
+						<div class="cont show_info"></div>
+					</div>
+				</div>		
+			</div>
+			<div class="js_detail swipe hide" data-index="1">
+				<div class="md_in">
+					<div class="tit">图文详情</div>
+					<div class="cont show_info_tab"></div>
+				</div>
+			</div>
+		</div>
+		{{#if_more_than product.skuLength 0}}
+			<div class="skubox_bg" style="display:none;"></div>
+		    <div class="skubox skubox_hide">
+		        <div class="skubox-scroll">
+		            <div class="skubox-product">
+		                <div class="img_box"><img class="img" src="" alt=""></div>
+		                <div class="tit">
+{{!-- 		                	<div class="close sprite">
+		                		<i></i>
+		                	</div> --}}
+		                	<svg class="icon close" aria-hidden="true"><use xlink:href="#icon-guanbianniu"></use></svg>
+		                    <div class="txt"></div>
+		                    <p class="price">¥<span></span></p>
+		                </div>
+		            </div>
+		            <div class="skubox-main" data-showsize="{{product.is_show_size}}">
+		            </div>
+		        </div>
+		        <div class="skubox-bot">
+		            {{!-- <a class="btn btn-can">取消</a> --}}
+		            <a class="btn btn-sure">去购买</a>
+		        </div>
+		    </div>
+	    {{/if_more_than}}
+		<div class="go-buy clear">
+			{{#if product.tno}} <!--参团-->
+				<div class="tuan_now {{#if_no_equal product.pin_status 2}}nowbuy_disable{{/if_no_equal}}" id="buyNow" data-tuan_flag="1" data-actionid='groupbuy'>&yen;
+		        	<span class="fir"><em class="p">{{getTuanPrice product}}</em>/件</span>
+		        	<span class="sec">立即参团</span>
+		        </div>
+		    {{else}} <!--开团-->
+				{{#if_equal product.pin_status 2}} <!--出售中-->
+					<div class="tip js_tuan_tip">
+						{{#if product.isInviteNew}}
+					        支付并邀请{{product.peopleLack}}位折800新用户参加，人数不足自动退款
+					    {{else}}
+					    	开团成功支付并邀请<span class="red">{{product.peopleLack}}人</span>参加，人数不足自动退款
+				        {{/if}}
+		        	</div>
+		        	<div class="buybtn homebtn hide">
+		        		<i class="sprite"></i>
+		        	</div>
+		        	<div class="buybtn kefubtn">
+		        		<i class="sprite"></i>
+		        	</div>
+		        	{{#if product.coupon_goods}}
+			            <div class="buybtn group_btn" id="buyGroup" data-tuan_flag="1" data-actionid='groupbuy' {{#if product.coupon_goods}}style="width:86.4%;margin-left:13.6%;"{{/if}}>&yen;
+			           		<em class="price">{{getTuanPrice product}}</em>
+			           		<span class="count">秒杀</span>
+			            </div>
+		        	{{else}}
+			            <div class="buybtn single_btn" id="buySingle" data-tuan_flag="0" data-actionid='singlebuy'>&yen;
+			           		<em class="price">{{product.cur_price}}</em>
+			           		<span class="count">单独购买</span>
+			           	</div>
+			            <div class="buybtn group_btn" id="buyGroup" data-tuan_flag="1" data-actionid='groupbuy' {{#if product.coupon_goods}}style="width:86.4%;margin-left:13.6%;"{{/if}}>&yen;
+			           		<em class="price">{{getTuanPrice product}}</em>
+			           		<span class="count">
+			           			{{#if product.isInviteNew}}
+			           				邀新价购买
+			           			{{else}}
+			           				拼团购买
+			           			{{/if}}
+			           		</span>
+			            </div>
+		            {{/if}}
+			    {{else}}
+			    	<div class="goIndexBtn">去首页逛逛吧</div>
+			    {{/if_equal}}
+			{{/if}}
+		</div>
+	</div>
+</div>
+<!-- img大图 -->
+<div id="dt_bigimg" class="dt_bigimg"></div>
+<div id="dt_bigimg_main" class="dt_bigimg_main"></div>
+<!-- sku大图 -->
+<div id="sku_bigimg" class="dt_bigimg"></div>
+<div id="sku_bigimg_main" class="dt_bigimg_main"></div>
+<div class="back_top js_back_top sprite" style="display:none;"></div>
+{{#extend 'page_scripts'}}
+	<script type="text/javascript">
+		window.prod_info = {{{productTpl}}};
+	    seajs.use("detail/detail_new");
+	</script>
+{{/extend}}
