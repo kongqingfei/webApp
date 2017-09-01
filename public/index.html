@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="http://zeptojs.com/zepto.min.js"></script>
+</head>
+<body>
+	<div class="component">
+		<div class="overlay">
+			<div class="overlay-inner"></div>
+		</div>
+	</div>
+	<img class="resize-image" style="display:none;" src="css/700x350.62770636c85adb000a9ad07ddcc4e866.jpg">
+	<button class="btn-crop js-crop">
+		Crop
+	</button>
+	<canvas width="300" height="300" style="border:solid 1px red;" id="canvasA"></canvas>
+</body>
+<script type="text/javascript">
+	$('.resize-image').wrap('<div class="resize-contariner"></div>')
+		.before('<span class="resize-handle resize-handle-nw"><span>')
+		.before('<span class="resize-handle resize-handle-ne"><span>')
+		.after('<span class="resize-handle resize-handle-se"><span>')
+		.after('<span class="resize-handle resize-handle-sw"><span>');
+	let resizeImage = (width, height) => {
+		resize_canvas.width = width;
+		resize_canvas.height = height;
+		resize_canvas.getContext('2d').drawImage(orig_src, 0, 0, width, height);
+		$('.resize-image').attr('src', resize_canvas.toDataURL('image/jpg'));
+	};
+	let moving = (e) => {
+		let mouse = {};
+		e.preventDefault();
+		e.stopPropagation();
+		mouse.x = (e.clientX || e.pageX) + $(window).scrollLeft();
+		mouse.y = (e.clientY || e.pageY) + $(window).scrollTop();
+		$container.offset({
+			left : mouse.x - (event_state.mouse_x - event_state.container_left),
+			top : mouse.y - (event_state.mouse_y - event_state.container_top)
+		});
+	};
+	let crop = () => {
+		let left = $('overlay').offset().left - $container.offset().left;
+		let top = $('overlay').offset().top - $container.offset().top;
+		let width = $('overlay').width();
+		let height = $('overlay').height();
+		let crop_canvas = document.createElement('canvas');
+		crop_canvas.width = width;
+		crop_canvas.height = height;
+		crop_canvas.getContext('2d').drawImage(image_target, left, top, width, height, 0, 0, width, height);
+		window.open(crop_canvas.toDataURL('image/jpg'));
+	};
+	let context = document.getElementById('canvasA').getContext('2d');
+	let img = new Image();
+	img.src = $('.resize-image').attr('src');
+	img.onload = () => {
+		context.drawImage(img, 0, 0, 700, 350, 20, 20, 200, 100);
+	};
+</script>
+</html>

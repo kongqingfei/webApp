@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const Koa = require('koa');
+const app = new Koa();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+app.use(async ctx => {
+  ctx.body = 'Hello World';
 });
 
-module.exports = router;
+app.listen(3000);
